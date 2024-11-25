@@ -16,6 +16,8 @@ use App\Controllers\Admin\DashboardAdminController;
 use App\Controllers\Admin\ArticleAdminController;
 use App\Controllers\Admin\CategoryAdminController;
 use App\Controllers\Admin\UserAdminController;
+use App\Controllers\Admin\CommentAdminController;
+
 
 $url = $_GET['url'] ?? '/';
 
@@ -76,6 +78,9 @@ try {
         $router->get('admin/category-del/{id}', [CategoryAdminController::class, 'category_delete']);
         $router->post('admin/category-update', [CategoryAdminController::class, 'category_update']);
         $router->post('admin/category-add', [CategoryAdminController::class, 'category_add']);
+        //? route of comment
+        $router->get('admin/comment-list', [CommentAdminController::class, 'comment_list']);
+        $router->get('admin/comment-del/{id}', [CommentAdminController::class, 'comment_delete']);
     });
 
 

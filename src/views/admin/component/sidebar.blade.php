@@ -50,6 +50,17 @@
                     </ul>
                 </li>
 
+                <!-- Add Comment Section here -->
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                        aria-expanded="false"><i data-feather="message-circle" class="feather-icon"></i><span
+                            class="hide-menu">Comment </span></a>
+                    <ul aria-expanded="false" class="collapse first-level base-level-line">
+                        <li class="sidebar-item"><a href="{{ BASE_URL_ADMIN }}comment-list" class="sidebar-link"><span
+                                    class="hide-menu"> All Comments
+                                </span></a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ BASE_URL_ADMIN }}logout"
                         aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
