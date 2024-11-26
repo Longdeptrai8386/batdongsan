@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'All Comments')
+@section('title', 'All Comment')
 
 @section('content')
     <div class="m-2">

@@ -20,7 +20,7 @@ class CommentAdminController extends BaseController
     {
         $comments = $this->commentAdminModel->list();
 
-        $this->render('admin.comments.all_comments', compact('comments'));
+        $this->render('admin.comment.all_comment', compact('comments'));
     }
 
     // Xóa bình luận
