@@ -14,7 +14,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="#" class="dropdown-item">Bất Động Sản</a>
+                        <a href="http://localhost/batdongsan/bds" class="dropdown-item">Bất Động Sản</a> <!-- Lỗi link liên kết "href="http://localhost/batdongsan/bds"" -->
                         <a href="#" class="dropdown-item">Bất Động Sản Bán</a>
                         <a href="#" class="dropdown-item">Bất Động Sản Thuê</a>
                     </div>

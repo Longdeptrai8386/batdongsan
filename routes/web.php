@@ -102,3 +102,4 @@ try {
 } catch (Exception $e) {
     dd($e->getMessage());
 }
+$router->get('/bds', [HomeController::class, 'thuBDS']); // Lỗi liên kết href="http://localhost/batdongsan/bds"
