@@ -25,7 +25,7 @@
                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
                                 href=""><?= htmlspecialchars($article['category']) ?></a>
                             <a class="text-body"
-                                href=""><small><?= date('M d, Y', strtotime($article['created_at'])) ?></small></a>
+                                href=""><small><?= date('M d, Y', strtotime( $article['created_at'])) ?></small></a>
                         </div>
                         <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
                             href="<?= BASE_URL ?>show/<?= htmlspecialchars($article['id']) ?>"
