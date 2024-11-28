@@ -37,4 +37,10 @@ class HomeController extends BaseController{
 
         $this->render('news', compact('data', 'comments'));
     }
+    public function introduce(){
+        $this->render('introduce');
+    }
+    public function contact(){
+        $this->render('contact');
+    }
 }

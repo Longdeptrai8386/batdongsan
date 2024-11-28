@@ -28,6 +28,9 @@ try {
     $router->get('/show_login', function () {
         require_once PATH_ROOT . "src/views/login.blade.php";
     });
+    $router->get('/show_introduce', [HomeController::class, 'introduce']);
+    $router->get('/show_contact', [HomeController::class, 'contact']);
+
     $router->post('/login', [UserController::class, 'login']);
     $router->get('/logout', [UserController::class, 'logout']);
     $router->get('/unauthorized', function() {
