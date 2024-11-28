@@ -1,4 +1,19 @@
 <!-- Thử bất động sản -->
+@extends('master')
+
+@section('title', 'Bất Động Sản')
+
+@section('content')
+    <div class="bds-news">
+        @foreach($latest as $article)
+            <div class="article">
+                <h3>{{ $article->title }}</h3>
+                <p>{{ $article->summary }}</p>
+            </div>
+        @endforeach
+    </div>
+@endsection
+
 <div class="col-lg-8">
     <div class="row">
         <div class="col-12">
@@ -92,3 +107,4 @@
         <?php endforeach ?>
     </div>
 </div>
+@endsection
