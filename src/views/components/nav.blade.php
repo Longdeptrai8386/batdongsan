@@ -9,17 +9,18 @@
         <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mr-auto py-0">
                 <a href="http://localhost/batdongsan/" class="nav-item nav-link active">Home</a>
-                <a href="category.html" class="nav-item nav-link">Category</a>
-                <a href="single.html" class="nav-item nav-link">Single News</a>
+                <a href="category.html" class="nav-item nav-link">Giới Thiệu</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Loại Tin</a>
                     <div class="dropdown-menu rounded-0 m-0">
                         <a href="http://localhost/batdongsan/bds" class="dropdown-item">Bất Động Sản</a> <!-- Lỗi link liên kết "href="http://localhost/batdongsan/bds"" -->
                         <a href="#" class="dropdown-item">Bất Động Sản Bán</a>
                         <a href="#" class="dropdown-item">Bất Động Sản Thuê</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="single.html" class="nav-item nav-link">Đăng Tin</a>
+
+                <a href="contact.html" class="nav-item nav-link">Liên Hệ</a>
             </div>
             <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
                 <input type="text" class="form-control border-0" placeholder="Keyword">
