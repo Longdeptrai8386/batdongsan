@@ -1,6 +1,6 @@
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
-        <a href="http://localhost/batdongsan/" class="navbar-brand d-block d-lg-none">
+        <a href="<?php echo BASE_URL; ?>" class="navbar-brand d-block d-lg-none">
             <h1 class="m-0 display-4 text-uppercase text-primary">Biz<span class="text-white font-weight-normal">News</span></h1>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -8,17 +8,25 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mr-auto py-0">
-                <a href="http://localhost/batdongsan/" class="nav-item nav-link active">Home</a>
+                <a href="<?php echo BASE_URL; ?>" class="nav-item nav-link active">Home</a>
                 <a href="<?php echo BASE_URL; ?>show_introduce" class="nav-item nav-link">Giới Thiệu</a>
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Loại Tin</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="http://localhost/batdongsan/bds" class="dropdown-item">Bất Động Sản</a> <!-- Lỗi link liên kết "href="http://localhost/batdongsan/bds"" -->
-                        <a href="#" class="dropdown-item">Bất Động Sản Bán</a>
-                        <a href="#" class="dropdown-item">Bất Động Sản Thuê</a>
+
+                        <?php foreach ($category as $item) {?>
+
+                            <a href="<?php echo BASE_URL . 'category/' . $item['id']; ?>" class="dropdown-item">
+                                <?php echo htmlspecialchars($item['name']); ?>
+                            </a>
+
+                        <?php } ?>
+
                     </div>
                 </div>
-                <a href="<?php echo BASE_URL; ?>form-coin" class="nav-item nav-link">Nạp Coin</a>
+
+
                 <a href="single.html" class="nav-item nav-link">Đăng Tin</a>
 
                 <a href="<?php echo BASE_URL; ?>show_contact" class="nav-item nav-link">Liên Hệ</a>

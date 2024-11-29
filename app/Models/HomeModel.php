@@ -42,6 +42,13 @@ class HomeModel extends BaseModel{
         return $this->query($sql, $params, false);
     }
 
+
+    public function getCategory(){
+        $sql = "SELECT * FROM categories";
+
+        return $this->query($sql);
+    }
+
     public function getCmtById($id){
         $sql = "SELECT c.id, c.content, c.created_at, u.username
                 FROM comments c
