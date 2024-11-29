@@ -4,7 +4,11 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\CategoryModel;
+
 use App\Models\TransactionModel;
+
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
@@ -15,10 +19,14 @@ class UserController extends BaseController
 {
 
     protected $userModel;
+    private $transactionModel;
+    private $categoryModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->transactionModel = new TransactionModel();
+        $this->categoryModel = new CategoryModel();
     }
 
     public function login()
@@ -226,7 +234,48 @@ class UserController extends BaseController
             echo "Số coin không hợp lệ.";
         }
     }
+    public function from_create(){
+        session_start();
+        if(isset($_SESSION['user'])){
+            $categories = $this->categoryModel->getAllCategories(); 
 
+            $this->render('createArticle', ['categories' => $categories]);
+        } else {
+            $this->redirect(BASE_URL. 'show_login');
+        }
+    }
+    public function createArticle() {
+        session_start();
+        $userId = $_SESSION['user_id']; 
+        $title = $_POST['title']; 
+        $content = $_POST['content']; 
+        $categoryId = $_POST['category_id']; 
+        $image = $_POST['image'] ?? null; 
+
+  
+        $user = $this->userModel->getCoins($userId);
+        if (!$user || $user['coins'] < 1000) {
+
+            $_SESSION['error'] = "Không đủ coin để đăng bài!";
+            $this->redirect(BASE_URL. 'from-create');
+        }
+
+
+        $this->userModel->deductCoins($userId, 1000);
+
+
+        $this->transactionModel->createArticle([
+            'title' => $title,
+            'content' => $content,
+            'author_id' => $userId,
+            'category_id' => $categoryId,
+            'image' => $image
+        ]);
+
+        // Thông báo thành công
+        $_SESSION['success'] = "Đăng bài thành công và đã trừ 1000 coin!";
+        $this->redirect(BASE_URL. 'from-create');
+    }
 
 
 

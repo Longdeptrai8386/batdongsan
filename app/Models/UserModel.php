@@ -34,5 +34,15 @@ class UserModel extends BaseModel{
         $sql = "UPDATE users SET coins = coins + ? WHERE id = ?";
         return $this->execute($sql, [$amount, $userId]);
     }
+    public function getCoins($userId) {
+        $query = "SELECT coins FROM users WHERE id = :id";
+        return $this->fetch($query, ['id' => $userId]);
+    }
+
+    // Trừ số coin của người dùng
+    public function deductCoins($userId, $amount) {
+        $query = "UPDATE users SET coins = coins - :amount WHERE id = :id";
+        return $this->execute($query, ['amount' => $amount, 'id' => $userId]);
+    }
 
 }
