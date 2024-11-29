@@ -31,6 +31,12 @@ try {
     $router->get('/show_introduce', [HomeController::class, 'introduce']);
     $router->get('/show_contact', [HomeController::class, 'contact']);
 
+
+    $router->get('/show_bds', [HomeController::class, 'bds']);
+    $router->get('/show_bdsb', [HomeController::class, 'bdsb']);
+    $router->get('/show_bdsth', [HomeController::class, 'bdsth']);
+    
+
     $router->post('/login', [UserController::class, 'login']);
     $router->get('/logout', [UserController::class, 'logout']);
     $router->get('/unauthorized', function() {
@@ -105,4 +111,3 @@ try {
 } catch (Exception $e) {
     dd($e->getMessage());
 }
-$router->get('/bds', [HomeController::class, 'thuBDS']); // Lỗi liên kết href="http://localhost/batdongsan/bds"
