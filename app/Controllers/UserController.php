@@ -42,6 +42,7 @@ class UserController extends BaseController
                         'username' => $user['username'],
                         'role' => $user['role'],
                         'avatar' => $user['avatar'],
+                        'coin' => $user['coins'],
                     ];
 
                     if ($user['role'] == 'admin') {
@@ -228,5 +229,5 @@ class UserController extends BaseController
 
 
 
-    
+
 }

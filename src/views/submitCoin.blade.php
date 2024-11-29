@@ -10,7 +10,7 @@
 
 @section('content')
 <h1>Nạp Coin</h1>
-
+<img src="https://i.vdoc.vn/data/image/2017/11/23/cach-tao-ma-qr-code.png" alt="" height="100" width="100">
 <!-- Form nhập số coin -->
 <form action="/submit-coin" method="POST">
     <label for="amount">Số lượng coin muốn nạp:</label>
