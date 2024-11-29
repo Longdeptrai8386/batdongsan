@@ -25,7 +25,7 @@
 
                     </div>
                 </div>
-
+                <a href="<?php echo BASE_URL; ?>form-coin" class="nav-item nav-link">Nạp Coin</a>
 
                 <a href="single.html" class="nav-item nav-link">Đăng Tin</a>
 
