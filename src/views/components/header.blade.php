@@ -24,6 +24,7 @@
                         @if (isset($_SESSION['user']))
                             <a class="nav-link text-body small" href="#">{{ $_SESSION['user']['username'] }}</a>
                             <a class="nav-link text-body small" href="#">Số Coin:{{ $_SESSION['user']['coin'] }}</a>
+                            <a class="nav-link text-body small" href="#">Lịch sử đăng bài</a>
                             <a class="nav-link text-body small" href="<?php echo BASE_URL; ?>logout">Logout</a>
                         @else
                             <a class="nav-link text-body small" href="<?php echo BASE_URL; ?>show_register">Register</a>

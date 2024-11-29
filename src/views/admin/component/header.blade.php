@@ -9,7 +9,7 @@
             <!-- ============================================================== -->
             <div class="navbar-brand">
                 <!-- Logo icon -->
-                <a href="index.html">
+                <a href="{{ BASE_URL_ADMIN }}dashboard">
                     <b class="logo-icon">
                         <!-- Dark Logo icon -->
                         <img src="{{ BASE_URL_ADMIN }}assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
