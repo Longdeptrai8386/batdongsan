@@ -15,13 +15,11 @@
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Loại Tin</a>
                     <div class="dropdown-menu rounded-0 m-0">
 
-                        <?php foreach ($category as $item) {?>
-
-                            <a href="<?php echo BASE_URL . 'category/' . $item['id']; ?>" class="dropdown-item">
-                                <?php echo htmlspecialchars($item['name']); ?>
-                            </a>
-
-                        <?php } ?>
+                    <?php foreach ($_SESSION['categories'] as $item): ?>
+                        <a href="<?php echo BASE_URL . 'category/' . $item["id"]; ?>" class="dropdown-item">
+                            <?php echo htmlspecialchars($item['name']); ?>
+                        </a>
+                    <?php endforeach; ?>
 
                     </div>
                 </div>

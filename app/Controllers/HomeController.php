@@ -22,13 +22,18 @@ class HomeController extends BaseController{
 
         $latest = $this->homeModel->latest();
 
-        $category = $this->homeModel->getCategory(); //HĐ
+        $category = $this->homeModel->getCategory();
 
-        $this->render('home', compact('featured', 'latest', 'category'));
-    }
+        // Tog
+        session_start();
+        $_SESSION['categories'] = $category;
 
-    public function about(){
-        $this->render('about');
+        // foreach($_SESSION['category'] as $category){
+        //     echo $category['name'];
+        // }
+        // die();
+
+        $this->render('home', compact('featured', 'latest'));
     }
 
     public function show($id){
@@ -45,5 +50,16 @@ class HomeController extends BaseController{
     public function contact(){
         $this->render('contact');
     }
+    
 
+    //BDS HĐ
+    public function category(){
+        $latest = $this->homeModel->latest();
+        $this->render('category', compact('latest'));
+    }
+
+    public function categoryDetail($id){
+        $latest = $this->homeModel->getArticlesByCategoryId($id);
+        $this->render('category', compact('latest'));
+    }
 }

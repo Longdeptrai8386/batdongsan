@@ -43,11 +43,29 @@ class HomeModel extends BaseModel{
     }
 
 
+    //HĐ
     public function getCategory(){
         $sql = "SELECT * FROM categories";
 
         return $this->query($sql);
     }
+
+    ///T Ah Kh
+    public function getCategoryById($id){
+        $sql = "SELECT * FROM categories WHERE id = :id";
+
+        return $this->query($sql, [$id]);
+    }
+
+    public function getArticlesByCategoryId($id) {
+        $sql = "SELECT a.*, c.name AS category, u.*, v.view_count, COUNT(com.id) as comment_count FROM articles a JOIN categories c ON a.category_id = c.id JOIN users u ON u.id = a.author_id LEFT JOIN article_views v ON a.id = v.article_id LEFT JOIN comments com ON a.id = com.article_id WHERE c.id = :id GROUP BY a.id, a.title, a.content, a.created_at, c.name, u.id, v.view_count ORDER BY v.view_count";
+        $params = [
+            'id' => $id
+        ];
+        return $this->query($sql, $params);
+    }
+
+    
 
     public function getCmtById($id){
         $sql = "SELECT c.id, c.content, c.created_at, u.username

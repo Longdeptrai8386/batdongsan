@@ -76,9 +76,9 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <small class="ml-3"><i
-                                class="far fa-eye mr-2"></i><?= htmlspecialchars($article['view_count']) ?></small>
+                            class="far fa-eye mr-2"></i><?= htmlspecialchars($article['view_count']) ?></small>
                         <small class="ml-3"><i
-                                class="far fa-comment mr-2"></i><?= htmlspecialchars($article['comment_count']) ?></small>
+                            class="far fa-comment mr-2"></i><?= htmlspecialchars($article['comment_count']) ?></small>
                     </div>
                 </div>
             </div>
