@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\TransactionModel;
 
 use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
@@ -194,4 +195,38 @@ class UserController extends BaseController
             dd($e->getMessage());
         }
     }
+
+    public function form_coin(){
+        session_start();
+        if(isset($_SESSION['user'])){
+            $this->render('submitCoin');
+        } else {
+            $this->redirect(BASE_URL. 'show_login');
+        }
+    }
+
+    public function submitCoin()
+    {
+        session_start();
+        $userId = $_SESSION['user']['id'];
+        $amount = intval($_POST['amount']);
+
+        if ($amount > 0) {
+            $transactionModel = new TransactionModel();
+            $result = $transactionModel->createTransaction($userId, $amount);
+
+            if ($result) {
+                echo "Yêu cầu nạp coin đã được gửi. Chờ admin duyệt.";
+            } else {
+                echo "Có lỗi xảy ra. Vui lòng thử lại.";
+                // echo $result;
+            }
+        } else {
+            echo "Số coin không hợp lệ.";
+        }
+    }
+
+
+
+    
 }

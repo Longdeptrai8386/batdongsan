@@ -24,6 +24,7 @@
                     <td class="u-name" data-u="{{ $value['username'] }}">{{ $value['username'] }}</td>
                     <td class="f-name" data-f="{{ $value['full_name'] }}">{{ $value['full_name'] }}</td>
                     <td class="email" data-email="{{ $value['email'] }}">{{ $value['email'] }}</td>
+                    <td class="coin" data-coin="{{ $value['coin'] }}">{{ $value['coin'] }}</td>
                     <td class="role" data-role="{{ $value['role'] }}"></td>
                     <td class="avatar" data-avatar="{{ $value['avatar'] }}">
                         <img width="100" src="./../uploads/image/{{ $value['avatar'] }}"

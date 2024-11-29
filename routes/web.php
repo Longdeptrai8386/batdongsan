@@ -17,6 +17,7 @@ use App\Controllers\Admin\ArticleAdminController;
 use App\Controllers\Admin\CategoryAdminController;
 use App\Controllers\Admin\UserAdminController;
 use App\Controllers\Admin\CommentAdminController;
+use App\Controllers\Admin\TransactionAdminController;
 
 
 $url = $_GET['url'] ?? '/';
@@ -33,6 +34,10 @@ try {
 
     $router->post('/login', [UserController::class, 'login']);
     $router->get('/logout', [UserController::class, 'logout']);
+
+        // User routes - nạp coin
+    $router->get('/form-coin', [UserController::class, 'form_coin']);
+    $router->post('/submit-coin', [UserController::class, 'submitCoin']);
     $router->get('/unauthorized', function() {
         echo "Unauthorized access.";
     });
@@ -84,6 +89,9 @@ try {
         //? route of comment
         $router->get('admin/comment-list', [CommentAdminController::class, 'comment_list']);
         $router->get('admin/comment-del/{id}', [CommentAdminController::class, 'comment_delete']);
+         // Coin transaction management (nạp coin)
+         $router->get('admin/coin-transactions', [TransactionAdminController::class, 'transaction_list']);
+         $router->post('admin/process-transaction', [TransactionAdminController::class, 'processTransaction']);
     });
 
 

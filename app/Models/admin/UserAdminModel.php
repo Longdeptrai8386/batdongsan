@@ -15,24 +15,26 @@ class UserAdminModel extends BaseModel{
         return $this->delete($this->table, $id);
     }
 
-    public function add($username, $fullname, $email, $password, $role, $avatar){
+    public function add($username, $fullname, $email, $password, $role, $avatar,$coin){
         $data = [
             'username' => $username,
             'full_name' => $fullname,
             'email' => $email,
             'password_hash' => $password,
             'role' => $role,
+            'coin' => $coin,
             'avatar' => $avatar,
         ];
         return $this->create($this->table, $data);
     }
 
-    public function updt($id, $username, $fullname, $email, $role, $avatar){
+    public function updt($id, $username, $fullname, $email, $role, $avatar,$coin){
         $data = [
             'username' => $username,
             'full_name' => $fullname,
             'email' => $email,
             'role' => $role,
+            'coin' => $coin,
             'avatar' => $avatar,
         ];
         return $this->update($this->table, $id, $data);

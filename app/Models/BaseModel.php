@@ -28,6 +28,17 @@ class BaseModel
             die("Kết nối thất bại: " . $e->getMessage());
         }
     }
+    public function fetch($sql, $params = [])
+    {
+        try {
+            $stmt = $this->pdo->prepare($sql); // Chuẩn bị câu truy vấn
+            $stmt->execute($params); // Thực thi câu truy vấn với tham số
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Lấy một dòng kết quả dưới dạng mảng liên kết
+        } catch (PDOException $e) {
+            $this->errors[] = "Fetch error: " . $e->getMessage(); // Xử lý lỗi nếu có
+            return false; // Nếu có lỗi, trả về false
+        }
+    }
 
     /**
      * Thực thi một truy vấn SQL với các tham số.
@@ -761,6 +772,7 @@ class BaseModel
         }
     }
 
+    
     /**
      * Tính giá trị nhỏ nhất của một cột trong bảng.
      *

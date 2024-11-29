@@ -29,4 +29,10 @@ class UserModel extends BaseModel{
 
         return $this->create('password_resets', $data);
     }
+    public function addCoins($userId, $amount)
+    {
+        $sql = "UPDATE users SET coins = coins + ? WHERE id = ?";
+        return $this->execute($sql, [$amount, $userId]);
+    }
+
 }
