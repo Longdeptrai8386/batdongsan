@@ -30,6 +30,17 @@ class TransactionModel extends BaseModel
         $sql = "UPDATE coin_transactions SET status = ? WHERE id = ?";
         return $this->execute($sql, [$status, $transactionId]);
     }
+    public function createArticle($data) {
+        $query = "INSERT INTO articles (title, content, author_id, category_id, image) 
+                  VALUES (:title, :content, :author_id, :category_id, :image)";
+        return $this->execute($query, [
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'author_id' => $data['author_id'],
+            'category_id' => $data['category_id'],
+            'image' => $data['image'] ?? null
+        ]);
+    }
 }
 
 ?>

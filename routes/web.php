@@ -11,6 +11,7 @@ use App\Controllers\UserController;
 use App\Controllers\CommentController;
 use App\Middleware\AuthMiddleware;
 
+use App\Controllers\TransactionController;
 
 use App\Controllers\Admin\DashboardAdminController;
 use App\Controllers\Admin\ArticleAdminController;
@@ -44,6 +45,9 @@ try {
         // User routes - nạp coin
     $router->get('/form-coin', [UserController::class, 'form_coin']);
     $router->post('/submit-coin', [UserController::class, 'submitCoin']);
+    // create đăng tin user
+    $router->get('/from_create', [UserController::class, 'from_create']);
+    $router->post('/articles-create', [UserController::class, 'createArticle']);
     $router->get('/unauthorized', function() {
         echo "Unauthorized access.";
     });
@@ -57,6 +61,10 @@ try {
     $router->get('/show/{id}', [HomeController::class, 'show']);
 
     $router->post('/comment', [CommentController::class, 'comment']);
+    
+
+
+
 
     $router->get('/show_forgot_password', function(){
         require_once PATH_ROOT . "src/views/forgot_password.blade.php";
