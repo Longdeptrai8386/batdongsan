@@ -225,15 +225,17 @@ class UserController extends BaseController
             $result = $transactionModel->createTransaction($userId, $amount);
 
             if ($result) {
-                echo "Yêu cầu nạp coin đã được gửi. Chờ admin duyệt.";
+                $_SESSION['success'] = "Yêu cầu nạp coin đã được gửi. Chờ admin duyệt.";
             } else {
-                echo "Có lỗi xảy ra. Vui lòng thử lại.";
+                $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại.";
                 // echo $result;
             }
         } else {
-            echo "Số coin không hợp lệ.";
+            $_SESSION['error'] = "Số coin không hợp lệ.";
         }
+        $this->redirect(BASE_URL . 'form-coin');
     }
+    
     public function from_create(){
         session_start();
         if(isset($_SESSION['user'])){

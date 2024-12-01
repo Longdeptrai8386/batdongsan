@@ -29,6 +29,8 @@
 
                 <a href="<?php echo BASE_URL; ?>show_contact" class="nav-item nav-link">Liên Hệ</a>
             </div>
+
+            
             <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
                 <input type="text" class="form-control border-0" placeholder="Keyword">
                 <div class="input-group-append">

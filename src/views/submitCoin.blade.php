@@ -75,6 +75,21 @@
 @section('content')
 <h1>Nạp Coin</h1>
 
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success">
+        <?= $_SESSION['success']; ?>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?= $_SESSION['error']; ?>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
+
 <img src="https://i.vdoc.vn/data/image/2017/11/23/cach-tao-ma-qr-code.png" alt="QR Code" height="100" width="100">
 <!-- Form nhập số coin -->
 <form action="/submit-coin" method="POST">
