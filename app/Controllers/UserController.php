@@ -235,7 +235,6 @@ class UserController extends BaseController
         }
         $this->redirect(BASE_URL . 'form-coin');
     }
-    
     public function from_create(){
         session_start();
         if(isset($_SESSION['user'])){
@@ -248,7 +247,7 @@ class UserController extends BaseController
     }
     public function createArticle() {
         session_start();
-        $userId = $_SESSION['user_id']; 
+        $userId = $_SESSION['user']['id']; 
         $title = $_POST['title']; 
         $content = $_POST['content']; 
         $categoryId = $_POST['category_id']; 
@@ -256,14 +255,17 @@ class UserController extends BaseController
 
   
         $user = $this->userModel->getCoins($userId);
-        if (!$user || $user['coins'] < 1000) {
+        // if (!$user || $user['coins'] < 1000) {
 
-            $_SESSION['error'] = "Không đủ coin để đăng bài!";
-            $this->redirect(BASE_URL. 'from-create');
-        }
+        //     $_SESSION['error'] = "Không đủ coin để đăng bài!";
 
+        //     $this->redirect(BASE_URL. 'from-create');
+        // }
 
-        $this->userModel->deductCoins($userId, 1000);
+        $amount = 10000;
+        $this->userModel->deductCoins($userId, $amount);
+
+        $_SESSION['user']['coin'] -= $amount;
 
 
         $this->transactionModel->createArticle([
@@ -276,7 +278,7 @@ class UserController extends BaseController
 
         // Thông báo thành công
         $_SESSION['success'] = "Đăng bài thành công và đã trừ 1000 coin!";
-        $this->redirect(BASE_URL. 'from-create');
+        $this->redirect(BASE_URL . 'from_create');
     }
 
 

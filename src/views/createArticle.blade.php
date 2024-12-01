@@ -22,7 +22,15 @@
 @section('content')
 <div class="container mt-5">
     <div class="card p-4 mx-auto" style="max-width: 600px; width: 100%;"> <!-- Center the card and restrict width -->
+    <?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success">
+        <?= $_SESSION['success']; ?>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
         <h2 class="text-center mb-4">Đăng bài viết</h2>
+
 
         <form action="/articles-create" method="POST" enctype="multipart/form-data">
             @csrf
