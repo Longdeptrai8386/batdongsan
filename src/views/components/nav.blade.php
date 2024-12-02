@@ -25,7 +25,7 @@
                 </div>
                 <a href="<?php echo BASE_URL; ?>form-coin" class="nav-item nav-link">Nạp Coin</a>
 
-                <a href="<?php echo BASE_URL; ?>from_create" class="nav-item nav-link">Đăng Tin</a>
+                <a href="<?php echo BASE_URL; ?>from-create" class="nav-item nav-link">Đăng Tin</a>
 
                 <a href="<?php echo BASE_URL; ?>show_contact" class="nav-item nav-link">Liên Hệ</a>
             </div>

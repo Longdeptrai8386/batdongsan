@@ -43,7 +43,7 @@ try {
     $router->get('/form-coin', [UserController::class, 'form_coin']);
     $router->post('/submit-coin', [UserController::class, 'submitCoin']);
     // create đăng tin user
-    $router->get('/from_create', [UserController::class, 'from_create']);
+    $router->get('/from-create', [UserController::class, 'from_create']);
     $router->post('/articles-create', [UserController::class, 'createArticle']);
     $router->get('/unauthorized', function() {
         echo "Unauthorized access.";

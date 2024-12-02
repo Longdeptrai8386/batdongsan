@@ -252,22 +252,24 @@ class UserController extends BaseController
         $content = $_POST['content']; 
         $categoryId = $_POST['category_id']; 
         $image = $_POST['image'] ?? null; 
-
-  
+    
         $user = $this->userModel->getCoins($userId);
-        // if (!$user || $user['coins'] < 1000) {
-
-        //     $_SESSION['error'] = "Không đủ coin để đăng bài!";
-
-        //     $this->redirect(BASE_URL. 'from-create');
-        // }
-
+    
+        // Kiểm tra nếu người dùng không đủ coin
+        if (!$user || $user['coins'] < 10000) {
+            $_SESSION['error'] = "Không đủ coin để đăng bài!";
+            $this->redirect(BASE_URL . 'from-create');      
+        }
+    
+        // Số coin cần trừ
         $amount = 10000;
+    
+        // Trừ coin của người dùng
         $this->userModel->deductCoins($userId, $amount);
-
+    
+        // Cập nhật số coin trong session
         $_SESSION['user']['coin'] -= $amount;
-
-
+    
         $this->transactionModel->createArticle([
             'title' => $title,
             'content' => $content,
@@ -275,11 +277,13 @@ class UserController extends BaseController
             'category_id' => $categoryId,
             'image' => $image
         ]);
-
+    
         // Thông báo thành công
-        $_SESSION['success'] = "Đăng bài thành công và đã trừ 1000 coin!";
-        $this->redirect(BASE_URL . 'from_create');
+        $_SESSION['success'] = "Đăng bài thành công và đã trừ 10000 coin!";
+        $this->redirect(BASE_URL . 'from-create');
+
     }
+    
 
 
 
