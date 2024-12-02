@@ -19,6 +19,8 @@ use App\Controllers\Admin\CategoryAdminController;
 use App\Controllers\Admin\UserAdminController;
 use App\Controllers\Admin\CommentAdminController;
 use App\Controllers\Admin\TransactionAdminController;
+use App\Controllers\SearchController;
+
 
 
 $url = $_GET['url'] ?? '/';
@@ -30,6 +32,8 @@ try {
     $router->get('/show_login', function () {
         require_once PATH_ROOT . "src/views/login.blade.php";
     });
+    $router->get('/search', [SearchController::class, 'index']  );
+    
     $router->get('/show_introduce', [HomeController::class, 'introduce']);
     $router->get('/show_contact', [HomeController::class, 'contact']);
 

@@ -473,4 +473,19 @@ class BaseController
     //     $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($string));
     //     return trim($slug, '-');
     // }
+    protected function search($keywords, $columns, $model)
+    {
+        // Sử dụng Eloquent để xây dựng câu truy vấn
+        $query = $model::where(function ($query) use ($keywords, $columns) {
+            foreach ($keywords as $keyword) {
+                $query->where(function ($query) use ($keyword, $columns) {
+                    foreach ($columns as $column) {
+                        $query->orWhere($column, 'like', "%$keyword%");
+                    }
+                });
+            }
+        });
+
+        return $query->get();
+    }
 }

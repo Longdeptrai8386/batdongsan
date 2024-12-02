@@ -791,4 +791,38 @@ class BaseModel
             return false;
         }
     }
+        /**
+ * Tìm kiếm các bản ghi dựa trên nhiều cột với các điều kiện phức tạp.
+ *
+ * @param string $table Tên bảng.
+ * @param array $searchData Dữ liệu tìm kiếm (key: tên cột, value: giá trị hoặc mảng điều kiện).
+ * @return array|false Danh sách các bản ghi tìm thấy hoặc false nếu có lỗi.
+ */
+public function search($table, $searchData)
+{
+    $conditions = [];
+    foreach ($searchData as $column => $value) {
+        if (is_array($value)) {
+            // Xử lý điều kiện phức tạp (ví dụ: lớn hơn, nhỏ hơn, khoảng)
+            $operator = $value[0];
+            $value = $value[1];
+            $conditions[] = "$column $operator :$column";
+        } else {
+            $conditions[] = "$column LIKE :$column";
+        }
+    }
+
+    $whereClause = implode(' OR ', $conditions);
+    $sql = "SELECT * FROM $table WHERE $whereClause";
+
+    try {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($searchData);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $this->errors[] = $e->getMessage();
+        return false;
+    }
+}
+
 }
