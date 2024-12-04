@@ -53,7 +53,7 @@ class UserController extends BaseController
                         'coin' => $user['coins'],
                     ];
 
-                    if ($user['role'] == 'admin') {
+                    if ($user['role'] == 'admin' || $user['role'] == 'editor') {
 
                         header('Location: ' . BASE_URL_ADMIN . 'dashboard');
                         exit;

@@ -15,6 +15,17 @@ class UserAdminController extends BaseController
         $this->userAdminModel = new UserAdminModel;
     }
 
+    // Kiểm tra quyền truy cập
+    private function checkPermissions()
+    {
+        start_session();
+        if ($_SESSION['user']['role'] === 'editor') {
+            $_SESSION['toastr'] = ['type' => 'error', 'message' => 'Bạn không có quyền sử dụng chức năng này.'];
+            $this->redirect(BASE_URL_ADMIN . 'dashboard');
+            exit;
+        }
+    }
+
     // Hiển thị danh sách người dùng
     public function user_list()
     {
@@ -26,12 +37,13 @@ class UserAdminController extends BaseController
     public function user_delete($id)
     {
         try {
+            $this->checkPermissions(); // Kiểm tra quyền
             $user = $this->userAdminModel->find('users', $id);
             $error = [];
 
             if (!empty($user['avatar'])) {
                 $upload_dir = PATH_ROOT . "public/uploads/image/";
-                $target =  $upload_dir . $user['avatar'];
+                $target = $upload_dir . $user['avatar'];
 
                 // Kiểm tra và xóa file avatar nếu tồn tại
                 if (file_exists($target)) {
@@ -61,6 +73,7 @@ class UserAdminController extends BaseController
     public function user_add()
     {
         try {
+            $this->checkPermissions(); // Kiểm tra quyền
             start_session();
             if ($this->isPost() && isset($_POST['btn-add'])) {
                 $username = $_POST['newUserName'];
@@ -84,7 +97,7 @@ class UserAdminController extends BaseController
                     $upload_dir = PATH_ROOT . "public/uploads/image/";
                     $imageFileType = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
                     $imageFileName = time() . '.' . $imageFileType;
-                    $target =  $upload_dir . $imageFileName;
+                    $target = $upload_dir . $imageFileName;
 
                     // Upload ảnh đại diện
                     if (!move_uploaded_file($avatar['tmp_name'], $target)) {
@@ -112,6 +125,7 @@ class UserAdminController extends BaseController
     public function user_update()
     {
         try {
+            $this->checkPermissions(); // Kiểm tra quyền
             start_session();
             if ($this->isPost() && isset($_POST['btn-edit'])) {
                 $id = $_POST['id'];
@@ -136,7 +150,7 @@ class UserAdminController extends BaseController
                     if (!empty($avatar['name'])) {
                         $imageFileType = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
                         $imageFileName = time() . "." . $imageFileType;
-                        $target =  $upload_dir . $imageFileName;
+                        $target = $upload_dir . $imageFileName;
 
                         // Xóa avatar cũ nếu có
                         if (file_exists($upload_dir . $currentAvatar)) {
