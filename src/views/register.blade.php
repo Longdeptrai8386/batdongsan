@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group">
-                <label for="newUserName">Full Name:</label>
+                <label for="newUserName">Full Namee:</label>
                 <input type="text" class="form-control form-control-sm" name="newUserFullName"
                     placeholder="Nhập tên của bạn...">
             </div>
