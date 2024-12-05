@@ -37,41 +37,58 @@ class UserAdminController extends BaseController
     public function user_delete($id)
     {
         try {
-            // Kiểm tra quyền admin
-            $this->checkPermissions(); 
+
+            $this->checkPermissions();
             
-            
-            // Tìm người dùng theo ID
+
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+    
+            // Lấy thông tin người dùng hiện tại
+            $currentUserId = $_SESSION['user']['id'] ?? null;
+    
+
+            if (!$currentUserId) {
+                echo json_encode(['status' => 'error', 'message' => 'Bạn chưa đăng nhập']);
+                return;
+            }
+    
+ 
             $user = $this->userAdminModel->find('users', $id);
             $error = [];
     
-            // Kiểm tra nếu user không tồn tại
+
             if (!$user) {
                 echo json_encode(['status' => 'error', 'message' => 'Không tìm thấy người dùng']);
+                return;
+            }
+
+            if ($id == $currentUserId) {
+                echo json_encode(['status' => 'error', 'message' => 'Bạn không thể xoá chính tài khoản của mình']);
                 return;
             }
     
 
             if ($user['position'] == 1) {
-                echo json_encode(['status' => 'error', 'message' => 'Không thể xoá tài khoản này']);
+                echo json_encode(['status' => 'error', 'message' => 'Không thể xoá tài khoản đặc biệt']);
                 return;
             }
-    
-            // Kiểm tra và xóa file avatar nếu tồn tại
+
             if (!empty($user['avatar'])) {
                 $upload_dir = PATH_ROOT . "public/uploads/image/";
                 $target = $upload_dir . $user['avatar'];
     
                 if (file_exists($target)) {
-                    unlink($target); // Xóa file avatar
+                    unlink($target); 
                 } else {
                     $error[] = "Không tìm thấy file";
                 }
             }
     
-            // Nếu không có lỗi, tiến hành xóa tài khoản
+
             if (empty($error)) {
-                $result = $this->userAdminModel->del($id); // Xóa khỏi cơ sở dữ liệu
+                $result = $this->userAdminModel->del($id); 
                 if ($result) {
                     echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
                 } else {
@@ -86,6 +103,8 @@ class UserAdminController extends BaseController
             dd($e->getMessage());
         }
     }
+    
+
     
 
 
@@ -156,44 +175,66 @@ class UserAdminController extends BaseController
                 $user = $this->userAdminModel->find('users', $id);
                 $currentAvatar = $user['avatar'];
                 $error = [];
-
+    
+                // **Kiểm tra nếu tài khoản có position = 1**
+                if ($user['position'] == 1) {
+                    $_SESSION['toastr'] = ['type' => 'error', 'message' => 'Không thể chỉnh sửa tài khoản đặc biệt.'];
+                    $this->redirect(BASE_URL_ADMIN . 'user-list');
+                    return;
+                }
+    
                 // Kiểm tra các trường thông tin bắt buộc
                 if (empty($username)) $error[] = "Tên đăng nhập không được để trống";
                 if (empty($fullname)) $error[] = "Họ và tên không được để trống";
                 if (empty($email)) $error[] = "Email không được để trống";
                 if (empty($role)) $error[] = "Vai trò không được để trống";
-
+    
+                // Xử lý avatar nếu có
                 if (empty($error)) {
                     $upload_dir = PATH_ROOT . "public/uploads/image/";
-
+    
                     if (!empty($avatar['name'])) {
                         $imageFileType = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
                         $imageFileName = time() . "." . $imageFileType;
                         $target = $upload_dir . $imageFileName;
-
+    
                         // Xóa avatar cũ nếu có
                         if (file_exists($upload_dir . $currentAvatar)) {
                             unlink($upload_dir . $currentAvatar);
                         }
-
+    
                         // Upload avatar mới
                         if (!move_uploaded_file($avatar['tmp_name'], $target)) {
                             $error[] = "Lỗi upload ảnh";
                         }
                     }
                 }
-
+    
+                // Nếu không có lỗi, cập nhật thông tin
                 if (empty($error)) {
-                    // Cập nhật thông tin người dùng trong cơ sở dữ liệu
-                    $result = $this->userAdminModel->updt($id, $username, $fullname, $email, $role, $imageFileName ?? $currentAvatar);
-                    $_SESSION['toastr'] = $result ? ['type' => 'success', 'message' => 'User updated successfully'] : ['type' => 'error', 'message' => 'Failed to update user'];
+                    $result = $this->userAdminModel->updt(
+                        $id,
+                        $username,
+                        $fullname,
+                        $email,
+                        $role,
+                        $imageFileName ?? $currentAvatar
+                    );
+    
+                    $_SESSION['toastr'] = $result
+                        ? ['type' => 'success', 'message' => 'Cập nhật thông tin người dùng thành công.']
+                        : ['type' => 'error', 'message' => 'Cập nhật thông tin thất bại.'];
+                } else {
+                    $_SESSION['toastr'] = ['type' => 'error', 'message' => implode(', ', $error)];
                 }
             }
+    
             $this->redirect(BASE_URL_ADMIN . 'user-list');
         } catch (Exception $e) {
             dd($e->getMessage());
         }
     }
+    
 
     // Đăng xuất người dùng
     public function logout()
