@@ -4,7 +4,7 @@
 // Khai báo dưới dạng HẰNG SỐ để không phải dùng $GLOBALS
 
 define('BASE_URL'       , 'http://batdongsan.test/');
-define('BASE_URL_ADMIN'       , 'http:/batdongsan.test/admin/');
+define('BASE_URL_ADMIN'       , 'http://batdongsan.test/admin/');
 define('DB_HOST'    , 'localhost');
 define('DB_PORT'    , 3306);
 define('DB_USERNAME', 'root');

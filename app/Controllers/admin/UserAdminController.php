@@ -37,39 +37,58 @@ class UserAdminController extends BaseController
     public function user_delete($id)
     {
         try {
-            $this->checkPermissions(); // Kiểm tra quyền
+            // Kiểm tra quyền admin
+            $this->checkPermissions(); 
+            
+            
+            // Tìm người dùng theo ID
             $user = $this->userAdminModel->find('users', $id);
             $error = [];
+    
+            // Kiểm tra nếu user không tồn tại
+            if (!$user) {
+                echo json_encode(['status' => 'error', 'message' => 'Không tìm thấy người dùng']);
+                return;
+            }
+    
 
+            if ($user['position'] == 1) {
+                echo json_encode(['status' => 'error', 'message' => 'Không thể xoá tài khoản này']);
+                return;
+            }
+    
+            // Kiểm tra và xóa file avatar nếu tồn tại
             if (!empty($user['avatar'])) {
                 $upload_dir = PATH_ROOT . "public/uploads/image/";
                 $target = $upload_dir . $user['avatar'];
-
-                // Kiểm tra và xóa file avatar nếu tồn tại
+    
                 if (file_exists($target)) {
-                    unlink($target);
+                    unlink($target); // Xóa file avatar
                 } else {
                     $error[] = "Không tìm thấy file";
                 }
             }
-
+    
+            // Nếu không có lỗi, tiến hành xóa tài khoản
             if (empty($error)) {
-                // Xóa người dùng khỏi cơ sở dữ liệu
-                $result = $this->userAdminModel->del($id);
+                $result = $this->userAdminModel->del($id); // Xóa khỏi cơ sở dữ liệu
                 if ($result) {
                     echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
                 } else {
-                    echo json_encode(['status' => 'error', 'message' => 'User Delete Failed']);
+                    echo json_encode(['status' => 'error', 'message' => 'User delete failed']);
                 }
             } else {
+                // Nếu có lỗi, trả về thông báo lỗi
                 echo json_encode(['status' => 'error', 'message' => $error]);
             }
         } catch (Exception $e) {
+            // Xử lý ngoại lệ
             dd($e->getMessage());
         }
     }
+    
 
-    // Thêm người dùng mới
+
     public function user_add()
     {
         try {
