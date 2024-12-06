@@ -45,6 +45,21 @@
 </head>
 
 <body>
+    <?php
+        session_start();
+        if (!empty($_SESSION['success'])) {
+            echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
+            unset($_SESSION['success']); // Xóa thông báo sau khi hiển thị
+        }
+
+        if (!empty($_SESSION['error'])) {
+            foreach ($_SESSION['error'] as $err) {
+                echo "<div class='alert alert-danger'>" . $err . "</div>";
+            }
+            unset($_SESSION['error']); // Xóa lỗi sau khi hiển thị
+        }
+    ?>
+
 
     <div class="form-login mx-auto mt-3 p-5 shadow-lg rounded-3" style="width: 580px;">
 

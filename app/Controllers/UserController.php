@@ -32,19 +32,18 @@ class UserController extends BaseController
     public function login()
     {
         try {
-
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-
+    
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login-btn'])) {
                 $email = $_POST['email'];
                 $password = $_POST['pass'];
-
+    
                 $user = $this->userModel->getUserByEmail($email);
-
+    
                 if ($user && password_verify($password, $user['password_hash'])) {
-
+    
                     $_SESSION['user'] = [
                         'id' => $user['id'],
                         'username' => $user['username'],
@@ -52,27 +51,28 @@ class UserController extends BaseController
                         'avatar' => $user['avatar'],
                         'coin' => $user['coins'],
                     ];
-
+    
                     if ($user['role'] == 'admin' || $user['role'] == 'editor') {
-
                         header('Location: ' . BASE_URL_ADMIN . 'dashboard');
-                        exit;
                     } else {
-
                         header('Location: ' . BASE_URL);
-                        exit;
                     }
+                    exit;
                 } else {
-                    echo "tên đăng nhập và mật khẩu không đúng";
+                    $_SESSION['error_message'] = "Tên đăng nhập và mật khẩu không đúng!";
+                    header('Location: ' . BASE_URL . 'show_login');
+                    exit;
                 }
             } else {
-                echo "Không có dữ liệu gửi lên";
+                $_SESSION['error_message'] = "Không có dữ liệu gửi lên!";
+                header('Location: ' . BASE_URL . 'show_login');
+                exit;
             }
         } catch (Exception $e) {
             dd($e->getMessage());
         }
     }
-
+    
     public function logout()
     {
         session_start();
@@ -82,6 +82,7 @@ class UserController extends BaseController
 
     public function register()
     {
+        session_start(); // Bắt đầu session để lưu thông báo
         try {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -91,87 +92,75 @@ class UserController extends BaseController
                 $newUserFullName = trim($_POST['newUserFullName']);
 
                 $error = [];
+                $success = '';
 
-                if (!$newUserName) {
-                    $error[] = "Không có username";
-                }
-                if (!$newUserEmail) {
-                    $error[] = "Không có email";
-                }
-                if (!$newUserPass) {
-                    $error[] = "Không có Password";
-                }
-                if (!$newUserFullName) {
-                    $error[] = "Không có fullname";
-                }
-                if (!$_FILES['avatar']['tmp_name']) {
-                    $error[] = "Không có avatar";
-                }
+                // Kiểm tra đầu vào
+                if (!$newUserName) $error[] = "Không có username";
+                if (!$newUserEmail) $error[] = "Không có email";
+                if (!$newUserPass) $error[] = "Không có Password";
+                if (!$newUserFullName) $error[] = "Không có fullname";
+                if (!$_FILES['avatar']['tmp_name']) $error[] = "Không có avatar";
 
-                //kiểm tra email
+                // Kiểm tra email
                 if (!filter_var($newUserEmail, FILTER_VALIDATE_EMAIL)) {
                     $error[] = "Invalid email format";
                 }
 
-                //kiểm tra độ dài pass
+                // Kiểm tra độ dài password
                 if (strlen($newUserPass) < 8) {
                     $error[] = "Password must be at least 8 characters";
                 }
 
-                //xử lý file
+                // Xử lý file ảnh
                 if (!empty($_FILES['avatar']['name'])) {
-
                     $target_dir = PATH_ROOT . "public/uploads/image/";
                     $imageFileType = strtolower(pathinfo($_FILES["avatar"]["name"], PATHINFO_EXTENSION));
                     $imageFileName = time() . '.' . $imageFileType;
                     $target_file = $target_dir . $imageFileName;
 
-                    // Kiểm tra kiểu tệp và kích thước tệp
+                    // Kiểm tra loại tệp và kích thước
                     $check = getimagesize($_FILES["avatar"]["tmp_name"]);
-                    if ($check === false) {
-                        $errors[] = "Tệp không phải là hình ảnh.";
-                    }
-                    if ($_FILES["avatar"]["size"] > 5000000) {
-                        $errors[] = "Tệp hình ảnh quá lớn.";
-                    }
+                    if ($check === false) $error[] = "Tệp không phải là hình ảnh.";
+                    if ($_FILES["avatar"]["size"] > 5000000) $error[] = "Tệp hình ảnh quá lớn.";
                     if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
-                        $errors[] = "Chỉ cho phép các định dạng JPG, JPEG, PNG và GIF.";
+                        $error[] = "Chỉ cho phép các định dạng JPG, JPEG, PNG và GIF.";
                     }
 
-                    // Nếu không có lỗi, di chuyển tệp hình ảnh
-                    if (empty($errors)) {
+                    // Nếu không có lỗi, di chuyển tệp ảnh
+                    if (empty($error)) {
                         if (!is_dir($target_dir)) {
                             mkdir($target_dir, 0755, true); // Tạo thư mục nếu chưa tồn tại
                         }
                         if (!move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
-                            $errors[] = "Lỗi khi tải lên hình ảnh.";
+                            $error[] = "Lỗi khi tải lên hình ảnh.";
                         }
                     }
                 }
 
-                // Mã hóa mật khẩu bằng Argon2
+                // Mã hóa mật khẩu
                 $hashedPass = password_hash($newUserPass, PASSWORD_ARGON2ID);
 
-                //khởi tao model user
+                // Nếu không có lỗi, thêm người dùng
                 if (empty($error)) {
                     $result = $this->userModel->add($newUserName, $newUserFullName, $newUserEmail, $hashedPass, $imageFileName);
                     if ($result) {
-                        echo "Successfully added";
-                        $this->redirect(BASE_URL);
+                        $_SESSION['success'] = "Đăng ký thành công!";
+                        $this->redirect(BASE_URL . 'show_register');
                     } else {
-                        echo "failed";
-                        $this->redirect(BASE_URL. 'show_register');
+                        $_SESSION['error'] = ["Đăng ký thất bại. Vui lòng thử lại!"];
+                        $this->redirect(BASE_URL . 'show_register');
                     }
-                }else{
-                    var_dump($error) ;
-                    $this->redirect(BASE_URL. 'show_register');
+                } else {
+                    $_SESSION['error'] = $error;
+                    $this->redirect(BASE_URL . 'show_register');
                 }
-
             } else {
-                echo "Không có dữ liệu gửi lên";
+                $_SESSION['error'] = ["Không có dữ liệu gửi lên"];
+                $this->redirect(BASE_URL . 'show_register');
             }
         } catch (Exception $e) {
-            dd($e->getMessage());
+            $_SESSION['error'] = ["Lỗi hệ thống: " . $e->getMessage()];
+            $this->redirect(BASE_URL . 'show_register');
         }
     }
 

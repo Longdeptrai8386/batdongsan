@@ -13,6 +13,20 @@
 
 <body>
 
+    <?php
+    // Kiểm tra xem có thông báo lỗi không và hiển thị nếu có
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_SESSION['error_message'])) {
+        // Hiển thị thông báo lỗi
+        echo "<div class='alert alert-danger'>{$_SESSION['error_message']}</div>";
+        // Xóa thông báo lỗi sau khi hiển thị để tránh hiện lại khi reload trang
+        unset($_SESSION['error_message']);
+    }
+    ?>
+
     <div class="form-login mx-auto mt-3 p-5 shadow-lg rounded-3" style="width: 580px;">
         <form action="<?php echo BASE_URL ?>login" method="post">
             
@@ -38,7 +52,6 @@
         <h6 class="mt-4 text-center"><a href="<?= BASE_URL ?>show_forgot_password">Quên Mật Khẩu??</a></h6>
 
     </div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
