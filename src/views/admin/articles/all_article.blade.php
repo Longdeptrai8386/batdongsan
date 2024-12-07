@@ -27,7 +27,7 @@
                         <a href="{{ BASE_URL_ADMIN }}article-edit/{{ $value['id'] }}" class="btn btn-danger">Edit</a>
                         <a href="{{ BASE_URL_ADMIN }}article-del/{{ $value['id'] }}"
                             class="delete btn btn-secondary">Delete</a>
-                        <a href="view.php?id={{ $value['id'] }}" class="btn btn-primary">View</a>
+                        
                     </td>
                 </tr>
             @endforeach

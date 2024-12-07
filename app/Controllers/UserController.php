@@ -240,7 +240,37 @@ class UserController extends BaseController
         $title = $_POST['title']; 
         $content = $_POST['content']; 
         $categoryId = $_POST['category_id']; 
-        $image = $_POST['image'] ?? null; 
+        // Xử lý tải lên hình ảnh từ form
+        $imageFileName = '';
+        if (!empty($_FILES['image']['name'])) {
+            $target_dir = PATH_ROOT . "public/uploads/image/";
+            $imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
+            $imageFileName = time() . '.' . $imageFileType;
+            $target_file = $target_dir . $imageFileName;
+
+            // Kiểm tra kiểu tệp và kích thước tệp
+            $check = getimagesize($_FILES["image"]["tmp_name"]);
+            if ($check === false) {
+                $errors[] = "Tệp không phải là hình ảnh.";
+            }
+            if ($_FILES["image"]["size"] > 5000000) {
+                $errors[] = "Tệp hình ảnh quá lớn.";
+            }
+            if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
+                $errors[] = "Chỉ cho phép các định dạng JPG, JPEG, PNG và GIF.";
+            }
+
+            // Nếu không có lỗi, di chuyển tệp hình ảnh
+            if (empty($errors)) {
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0755, true); // Tạo thư mục nếu chưa tồn tại
+                }
+                if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    $errors[] = "Lỗi khi tải lên hình ảnh.";
+                }
+            }
+        }
+        
     
         $user = $this->userModel->getCoins($userId);
     
@@ -264,7 +294,7 @@ class UserController extends BaseController
             'content' => $content,
             'author_id' => $userId,
             'category_id' => $categoryId,
-            'image' => $image
+            'image' => $imageFileName,
         ]);
     
         // Thông báo thành công

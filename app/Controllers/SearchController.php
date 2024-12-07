@@ -3,7 +3,7 @@
   use App\Controllers\BaseController;
   use App\Models\HomeModel;
   use App\Models\SearchModel;
-  use Controller;
+
   
   class SearchController extends BaseController
   {
