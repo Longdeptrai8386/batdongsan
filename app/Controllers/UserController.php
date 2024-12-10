@@ -208,22 +208,27 @@ class UserController extends BaseController
         session_start();
         $userId = $_SESSION['user']['id'];
         $amount = intval($_POST['amount']);
-
+    
         if ($amount > 0) {
-            $transactionModel = new TransactionModel();
-            $result = $transactionModel->createTransaction($userId, $amount);
-
-            if ($result) {
-                $_SESSION['success'] = "Yêu cầu nạp coin đã được gửi. Chờ admin duyệt.";
+            if ($amount <= 1000000) { 
+                $transactionModel = new TransactionModel();
+                $result = $transactionModel->createTransaction($userId, $amount);
+    
+                if ($result) {
+                    $_SESSION['success'] = "Yêu cầu nạp coin đã được gửi. Chờ admin duyệt.";
+                } else {
+                    $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại.";
+                    // echo $result;
+                }
             } else {
-                $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại.";
-                // echo $result;
+                $_SESSION['error'] = "Số coin không được vượt quá 1,000,000.";
             }
         } else {
             $_SESSION['error'] = "Số coin không hợp lệ.";
         }
         $this->redirect(BASE_URL . 'form-coin');
     }
+    
     public function from_create(){
         session_start();
         if(isset($_SESSION['user'])){

@@ -102,7 +102,7 @@
     Quy đổi 10 coin = 1000đ
 </label>
     <label for="amount">Số lượng coin muốn nạp:</label>
-    <input type="number" id="amount" name="amount" min="1" required>
+    <input type="number" id="amount" name="amount" min="1"  required>
     <button type="submit">Nạp Coin</button>
 </form>
 </div>

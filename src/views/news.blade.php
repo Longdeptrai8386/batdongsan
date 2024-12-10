@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label for="" class="text-dark">Comment:</label>
                                     <input type="text" class="form-control" name="content" id="comment"
-                                        placeholder="Comment here...">
+                                        placeholder="Comment here..." required>
                                 </div>
 
                                 @php session_start() @endphp
