@@ -71,7 +71,6 @@
                 <label for="">Role:</label>
                 <select name="role" id="role" required>
                     <option value="">---</option>
-                    <option value="admin">Admin</option>
                     <option value="editor">Editor</option>
                     <option value="user">User</option>
                 </select>
@@ -124,7 +123,6 @@
                 <label for="">Role:</label>
                 <select name="newUserRole" id="" required>
                     <option value="">---</option>
-                    <option value="admin">Admin</option>
                     <option value="editor">Editor</option>
                     <option value="user">User</option>
                 </select>
