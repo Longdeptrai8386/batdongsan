@@ -25,6 +25,10 @@
             border-radius: 10px;
         }
         .contact-section {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 8px;
@@ -78,8 +82,8 @@
 @endsection
 
 @section('content')
-<h1>Nạp Coin</h1>
 <div class="contact-section">
+<h1>Nạp Coin</h1>
 <?php if (isset($_SESSION['success'])): ?>
     <div class="alert alert-success">
         <?= $_SESSION['success']; ?>

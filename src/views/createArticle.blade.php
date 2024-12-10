@@ -34,7 +34,8 @@
     </div>
     <?php unset($_SESSION['error']); ?>
 <?php endif; ?>
-        <h2 class="text-center mb-4">Đăng bài viết</h2>
+        <h2 class="text-center mb-4">Đăng Bài Viết</h2>
+        <h4 class="text-center mb-4" style="color: red;">"Mỗi Lần Đăng Tin Tốn 10000 Coin"</h4>
 
 
         <form action="/articles-create" method="POST" enctype="multipart/form-data">

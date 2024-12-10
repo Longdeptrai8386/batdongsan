@@ -39,7 +39,9 @@ class HomeModel extends BaseModel{
         $params = [
             'id' => $id
         ];
-        return $this->query($sql, $params, false);
+        $result = $this->query($sql, $params, false);
+
+        return $result ?: []; // Trả về mảng rỗng nếu không có kết quả
     }
 
 
