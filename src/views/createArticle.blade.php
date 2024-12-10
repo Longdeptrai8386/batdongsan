@@ -43,9 +43,10 @@
                 <label for="title" class="form-label">Tiêu đề</label>
                 <input type="text" name="title" id="title" class="form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="content" class="form-label">Nội dung</label>
-                <textarea name="content" id="content" class="form-control" required></textarea>
+            
+            <div class="form-group">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control a4-size" id="editor" name="content" placeholder="Enter content" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="category_id" class="form-label">Danh mục</label>

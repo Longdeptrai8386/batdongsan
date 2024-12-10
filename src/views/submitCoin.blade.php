@@ -24,16 +24,21 @@
             margin: 20px auto;
             border-radius: 10px;
         }
-
-        form {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
+        .contact-section {
             padding: 20px;
-            background-color: #fff;
+            background-color: #f9f9f9;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+        .contact-section h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .contact-section p {
+            color: #7f8c8d;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+       
 
         label {
             font-size: 1.2rem;
@@ -74,7 +79,7 @@
 
 @section('content')
 <h1>Nạp Coin</h1>
-
+<div class="contact-section">
 <?php if (isset($_SESSION['success'])): ?>
     <div class="alert alert-success">
         <?= $_SESSION['success']; ?>
@@ -100,4 +105,5 @@
     <input type="number" id="amount" name="amount" min="1" required>
     <button type="submit">Nạp Coin</button>
 </form>
+</div>
 @endsection
