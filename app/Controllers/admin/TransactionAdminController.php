@@ -36,30 +36,29 @@ class TransactionAdminController extends BaseController
         $userId = $_POST['userId'];
         $amount = $_POST['amount'];
 
-       
-
-
         if (!$transactionId) {
-            echo json_encode(['status' => 'error', 'message' => 'Transaction ID or action missing']);
-            return;
+            $message = 'Transaction ID or action missing';
+            return $this->redirect(BASE_URL_ADMIN . 'coin-transactions?status=error&message=' . urlencode($message));
         }
 
         try {
-            // Duyệt hoặc từ chối giao dịch dựa trên action
             $status = $action == 'approved' ? 'approved' : 'rejected';
             $result = $this->transactionAdminModel->updateTransactionStatus($transactionId, $status);
 
-            if($action == 'approved') {
+            if ($action == 'approved') {
                 $this->userAdminModel->addCoins($userId, $amount);
             }
 
             if ($result) {
-                $this->redirect(BASE_URL_ADMIN. 'coin-transactions');
+                $message = $status === 'approved' ? 'Giao Dịch Đã Được Phê Duyệt!' : 'Từ Chối Giao Dịch!';
+                return $this->redirect(BASE_URL_ADMIN . 'coin-transactions?status=success&message=' . urlencode($message));
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing the transaction']);
+                $message = 'An error occurred while processing the transaction';
+                return $this->redirect(BASE_URL_ADMIN . 'coin-transactions?status=error&message=' . urlencode($message));
             }
         } catch (Exception $e) {
-            echo json_encode(['status' => 'error', 'message' => 'An unexpected error occurred: ' . $e->getMessage()]);
+            $message = 'An unexpected error occurred: ' . $e->getMessage();
+            return $this->redirect(BASE_URL_ADMIN . 'coin-transactions?status=error&message=' . urlencode($message));
         }
     }
 }

@@ -3,6 +3,13 @@
 @section('title', 'Tất cả giao dịch nạp Coin')
 
 @section('content')
+
+@if(isset($_GET['status']) && isset($_GET['message']))
+    <div style="margin-bottom: 20px; padding: 10px; border: 1px solid {{ $_GET['status'] === 'success' ? 'green' : 'red' }}; color: {{ $_GET['status'] === 'success' ? 'green' : 'red' }};">
+        {{ $_GET['message'] }}
+    </div>
+@endif
+
 <h2>Danh sách giao dịch chờ duyệt</h2>
 
 
