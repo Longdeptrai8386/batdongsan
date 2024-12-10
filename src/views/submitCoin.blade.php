@@ -78,6 +78,18 @@
         button:active {
             background-color: #004085;
         }
+
+        h6 a {
+            color: #007bff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        h6 a:hover {
+            color: #66b2ff;
+        }
     </style>
 @endsection
 
@@ -109,5 +121,6 @@
     <input type="number" id="amount" name="amount" min="1"  required>
     <button type="submit">Nạp Coin</button>
 </form>
+<h6 class="mt-4 text-center" style=""><a href="<?php echo BASE_URL; ?>show_introduce">Hướng Dẫn Nạp Coin!</a></h6>
 </div>
 @endsection

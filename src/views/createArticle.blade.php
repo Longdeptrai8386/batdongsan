@@ -16,6 +16,37 @@
                 width: 100%;
             }
         }
+        h6 a {
+            color: #007bff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        h6 a:hover {
+            color: #66b2ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            background-color: #004085;
+        }
     </style>
 @endsection
 
@@ -62,8 +93,9 @@
                 <input type="file" name="image" id="image" class="form-control">
             </div>
             <div>
-                <button type="submit" class="btn btn-primary w-100">Đăng bài</button>
+                <button type="submit">Đăng bài</button>
             </div>
+            <h6 class="mt-4 text-center" style=""><a href="<?php echo BASE_URL; ?>show_introduce">Hướng Dẫn Nạp Coin!</a></h6>
         </form>
     </div>
 </div>
