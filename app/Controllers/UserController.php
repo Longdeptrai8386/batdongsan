@@ -239,6 +239,8 @@ class UserController extends BaseController
             $this->redirect(BASE_URL. 'show_login');
         }
     }
+    
+    ///
     public function createArticle() {
         session_start();
         $userId = $_SESSION['user']['id']; 

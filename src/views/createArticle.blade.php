@@ -95,7 +95,7 @@
             <div>
                 <button type="submit">Đăng bài</button>
             </div>
-            <h6 class="mt-4 text-center" style=""><a href="<?php echo BASE_URL; ?>show_introduce">Hướng Dẫn Nạp Coin!</a></h6>
+            <h6 class="mt-4 text-center" style=""><a href="<?php echo BASE_URL; ?>show_introduce">Hướng Dẫn Đăng Tin!</a></h6>
         </form>
     </div>
 </div>
