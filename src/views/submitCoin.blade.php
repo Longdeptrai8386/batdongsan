@@ -5,14 +5,14 @@
 @section('styles')
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            /* font-family: 'Arial', sans-serif; */
             background-color: #f4f4f9;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
-        h1 {
+        .ncoin {
             text-align: center;
             color: #333;
             font-size: 2.5rem;
@@ -95,7 +95,7 @@
 
 @section('content')
 <div class="contact-section">
-<h1>Nạp Coin</h1>
+<h1 class="ncoin">Nạp Coin</h1>
 <?php if (isset($_SESSION['success'])): ?>
     <div class="alert alert-success">
         <?= $_SESSION['success']; ?>
